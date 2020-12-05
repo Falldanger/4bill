@@ -4,7 +4,7 @@ namespace App\Roles\Contracts;
 
 interface ItemContract
 {
-    public function getId();
+    public function getId(): int;
 
-    public function getName();
+    public function getName(): string;
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Roles\Contracts\UserRoles;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -47,7 +48,18 @@ class User extends Authenticatable
     ];
 
 
-    public function role() {
+    public function role()
+    {
         return $this->belongsToMany(Role::class, 'user_role');
+    }
+
+    public function isAdmin()
+    {
+        return $this->role()->where('role_name', UserRoles::ROLE_ADMIN)->exists();
+    }
+
+    public function isUser()
+    {
+        return $this->role()->where('role_name', UserRoles::ROLE_USER)->exists();
     }
 }
